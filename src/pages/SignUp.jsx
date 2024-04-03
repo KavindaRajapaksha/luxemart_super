@@ -3,6 +3,13 @@ import { useState } from 'react'
 import { AiFillEyeInvisible,AiFillEye  } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import OAuth from '../components/OAuth';
+import { getAuth,createUserWithEmailAndPassword,updateProfile,updatePhoneNumber } from "firebase/auth";
+import {db} from '../firbase.js';
+import { serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-toastify';
+
 
 
 export default function SignUp() {
@@ -15,14 +22,42 @@ export default function SignUp() {
     
   })
   const{email,password,userName,mobileNumber} = formData;
+  const navigate = useNavigate();
   const handleChange=(e)=>{
     setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
-    console.log(formData);
+    
     
   }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  
+      await updateProfile(auth.currentUser, {
+        displayName: userName,
+      });
+  
+      // await updatePhoneNumber(auth.currentUser, mobileNumber);
+  
+      const user = userCredential.user;
+      console.log(user);
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
+     await setDoc(doc(db, 'users', user.uid), formDataCopy);
+    //  toast.success("Sign up successful!");
+    //  navigate('/')
+
+    } catch (error) {
+      toast.error("Something went wrong in the sign up process. Please try again.");
+    }
+  };
+  
+
 
 
 
@@ -34,7 +69,7 @@ export default function SignUp() {
           <img src='https://storage.needpix.com/rsynced_images/grocery-2932906_1280.jpg' alt='key'  className='w-full rounded-2xl'/>
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form>
+          <form onSubmit={handleSubmit}>
             <input type="text"
               id="userName"
               value={userName}
@@ -73,7 +108,7 @@ export default function SignUp() {
                 />
               )}
               </div>
-          </form>
+         
           <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
               <p className="mb-6 text-sm">
                 Have a account?
@@ -103,6 +138,7 @@ export default function SignUp() {
               <p className="text-center font-semibold mx-4">OR</p>
             </div>
             <OAuth/>
+            </form>
         </div>
       </div>
     </section>

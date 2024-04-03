@@ -1,20 +1,22 @@
 import React from 'react'
 import { useState } from 'react'
-import { AiFillEyeInvisible,AiFillEye  } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import OAuth from '../components/OAuth';
 
 
 export default function ForgotPassword() {
-
+  const [formData, setFormData] = useState({
+    email: '',
+  });
+  const{email} = formData;
   
- const[email,setEmail]=useState()
+ 
   const handleChange=(e)=>{
-    setEmail((prevState) => ({
+    setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
- 
+    console.log(formData);
     
   }
 
