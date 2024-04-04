@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
-import { db } from "../firbase";
+// import { db } from "../firbase";
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +20,7 @@ export default function SignIn() {
       ...prevState,
       [e.target.id]: e.target.value,
     }));
-    console.log(formData);
+    
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
