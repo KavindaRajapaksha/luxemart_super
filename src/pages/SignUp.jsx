@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { AiFillEyeInvisible,AiFillEye  } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import OAuth from '../components/OAuth';
-import { getAuth,createUserWithEmailAndPassword,updateProfile,updatePhoneNumber } from "firebase/auth";
+import { getAuth,createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
 import {db} from '../firbase.js';
 import { serverTimestamp, setDoc } from 'firebase/firestore';
 import { doc } from 'firebase/firestore';
