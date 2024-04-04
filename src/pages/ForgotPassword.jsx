@@ -1,7 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import OAuth from '../components/OAuth';
+import {sendPasswordResetEmail,getAuth} from 'firebase/auth';
+import { toast } from 'react-toastify';
+
+
 
 
 export default function ForgotPassword() {
@@ -19,6 +23,18 @@ export default function ForgotPassword() {
     console.log(formData);
     
   }
+  const navigate=useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      await sendPasswordResetEmail(auth, email);
+      toast.success("Password reset email sent successfully!");
+      navigate('/sign-in');
+    } catch (error) {
+      toast.error("Something went wrong in the password reset process.");
+    }
+  }
 
 
 
@@ -30,7 +46,7 @@ export default function ForgotPassword() {
           <img src='https://storage.needpix.com/rsynced_images/grocery-2932906_1280.jpg' alt='key'  className='w-full rounded-2xl'/>
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form>
+          <form onSubmit={handleSubmit}>
             <input type="email"
               id="email"
               value={email}
@@ -38,7 +54,7 @@ export default function ForgotPassword() {
               placeholder="Email address"
               className="mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out" />
               
-          </form>
+      
           <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
               <p className="mb-6 text-sm">
                 Don't have a account?
@@ -51,10 +67,10 @@ export default function ForgotPassword() {
               </p>
               <p className='text-sm'>
                 <Link
-                  to="/forgot-password"
+                  to="/sign-in"
                   className="text-blue-600 hover:text-blue-800 transition duration-200 ease-in-out "
                 >
-                  Forgot password?
+                  Sign in instead
                 </Link>
               </p>
             </div>
@@ -68,6 +84,7 @@ export default function ForgotPassword() {
               <p className="text-center font-semibold mx-4">OR</p>
             </div>
             <OAuth/>
+            </form >
         </div>
       </div>
     </section>
