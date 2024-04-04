@@ -1,9 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
 import { AiFillEyeInvisible,AiFillEye  } from "react-icons/ai";
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import OAuth from '../components/OAuth';
-
+import { signInWithEmailAndPassword,getAuth } from 'firebase/auth';
+import {toast} from 'react-toastify';
+import { db } from '../firbase';
 
 export default function SignIn() {
   const[showPassword,setShowPassword]=useState(false)
@@ -12,6 +14,7 @@ export default function SignIn() {
     password: ''
   })
   const{email,password} = formData;
+  const navigate=useNavigate();
   const handleChange=(e)=>{
     setFormData((prevState) => ({
       ...prevState,
@@ -19,6 +22,25 @@ export default function SignIn() {
     }));
     console.log(formData);
     
+  }
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+   try{
+    const auth = getAuth();
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    if(userCredential.user){
+      toast.success("Sign in successful!");
+      navigate('/')
+    }
+
+
+
+   }catch(error){
+     toast.error("Something went wrong in the sign in process.");
+   }
+
+
+
   }
 
 
@@ -31,7 +53,7 @@ export default function SignIn() {
           <img src='https://storage.needpix.com/rsynced_images/grocery-2932906_1280.jpg' alt='key'  className='w-full rounded-2xl'/>
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form>
+          <form onSubmit={handleSubmit}>
             <input type="email"
               id="email"
               value={email}
@@ -58,7 +80,7 @@ export default function SignIn() {
                 />
               )}
               </div>
-          </form>
+       
           <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
               <p className="mb-6 text-sm">
                 Don't have a account?
@@ -88,6 +110,7 @@ export default function SignIn() {
               <p className="text-center font-semibold mx-4">OR</p>
             </div>
             <OAuth/>
+            </form>
         </div>
       </div>
     </section>
