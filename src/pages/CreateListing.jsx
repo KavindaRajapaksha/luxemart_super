@@ -12,9 +12,11 @@ import { getAuth } from "firebase/auth";
 import { v4 as uuidv4 } from "uuid";
 import { addDoc, serverTimestamp, collection } from "firebase/firestore";
 import { db } from "../firbase";
+import {useNavigate} from "react-router-dom";
 
 export default function CreateListing() {
   const auth = getAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -124,6 +126,7 @@ export default function CreateListing() {
     const docRef = await addDoc(collection(db, "products"), formDataCopy);
     setLoading(false);
     toast.success("Listing created");
+    navigate(`/category/${formDataCopy.category}/${docRef.id}`);
   };
 
   //  useEffect(() => {
