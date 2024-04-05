@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { updateProfile } from "firebase/auth";
 import { db } from "../firbase";
 import { doc, updateDoc } from "firebase/firestore";
+import { RiShoppingBag3Fill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const auth = getAuth();
@@ -91,6 +93,12 @@ export default function Profile() {
               </p>
             </div>
           </form>
+          <button type="submit" className="  w-full bg-green-600 text-white uppercase px-7 py-3 text-sm font-medium rounded shadow-md hover:bg-green-700 transition duration-150 ease-in-out hover:shadow-lg active:bg-green-800">
+          <Link to='/create-list' className="flex justify-center items-center">
+          <RiShoppingBag3Fill className="mr-2 text-3xl  rounded-full p-1 border-2"/>
+            Add Items
+            </Link>
+          </button>
         </div>
       </section>
     </>
