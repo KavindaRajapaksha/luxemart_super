@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
+import {useEffect} from "react";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 import { v4 as uuidv4 } from "uuid";
-import { addDoc, serverTimestamp, collection } from "firebase/firestore";
+import { addDoc, serverTimestamp,collection } from "firebase/firestore";
 import { db } from "../firbase";
 
+
+
+
 export default function CreateListing() {
-  const auth = getAuth();
+    const auth = getAuth();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -25,113 +23,137 @@ export default function CreateListing() {
     image: null,
   });
   const [loading, setLoading] = useState(false);
-  const { title, description, price, discountPrice, category, offer, image } =
+  const { title, description, price, discountPrice, category, offer,image } =
     formData;
 
-  const handleChange = (e) => {
-    let boolean = null;
-    if (e.target.value === "true") {
-      boolean = true;
+
+ const handleChange = (e) => {
+    let boolean=null;
+    if(e.target.value==="true"){
+       boolean=true;
     }
-    if (e.target.value === "false") {
-      boolean = false;
+    if(e.target.value==="false"){
+       boolean=false;
     }
 
     //files
     if (e.target.files) {
-      setFormData((prevState) => ({
-        ...prevState,
-        image: e.target.files,
-      }));
+        setFormData((prevState) => ({
+          ...prevState,
+          image: e.target.files,
+        }));
+      }
+        //text, number, select
+      if (!e.target.files) {
+       
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.id]: e.target.id === "category" ? e.target.value : boolean ?? e.target.value,
+          }));
+      }
+    
+
+ };
+    const handleSubmit = async(e) => {
+        e.preventDefault(); //prevent the refreshing
+        setLoading(true);
+        // if(discountPrice>price){
+            
+        //     setLoading(false);
+        //     toast.error("Discount price cannot be greater than the price");
+        //     return;
+        // }
+
+        // if(image.length>1){
+        //     setLoading(false);
+        //     toast.error("Please select only one image");
+        //     return;
+        // }
+        const storeImage = async (image) => {
+            return new Promise((resolve, reject) => {
+                const storage=getStorage();
+                const filename = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+                const storageRef = ref(storage, filename);
+                const uploadTask = uploadBytesResumable(storageRef, image);
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                      // Observe state change events such as progress, pause, and resume
+                      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                      const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                      console.log("Upload is " + progress + "% done");
+                      switch (snapshot.state) {
+                        case "paused":
+                          console.log("Upload is paused");
+                          break;
+                        case "running":
+                          console.log("Upload is running");
+                          break;
+                      }
+                    },
+                    (error) => {
+                      // Handle unsuccessful uploads
+                      reject(error);
+                    },
+                    () => {
+                      // Handle successful uploads on complete
+                      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        resolve(downloadURL);
+                      });
+                    }
+                  );
+
+              });
+        }
+        const imgUrl = await Promise.all(
+            [...image].map((image) => storeImage(image))
+          ).catch((error) => {
+            setLoading(false);
+            toast.error("Images not uploaded");
+            return;
+          });
+          console.log(imgUrl)
+          
+          const formDataCopy = {
+            ...formData,
+            imgUrl,
+            timestamp: serverTimestamp(),
+            userRef: auth.currentUser.uid,
+          };
+
+          console.log(formDataCopy);
+        //complete the database operation
+        !formDataCopy.offer && delete formDataCopy.discountPrice;
+          const docRef = await addDoc(collection(db, "products"), formDataCopy);
+          setLoading(false);
+          toast.success("Listing created");
+
+
+          
+          // delete formDataCopy.image;
+          // !formDataCopy.offer && delete formDataCopy.discountPrice;
+          // const docRef = await addDoc(collection(db, "products"), formDataCopy);
+          // setLoading(false);
+          // toast.success("Listing created");
+
+      
     }
-    //text, number, select
-    if (!e.target.files) {
-      setFormData((prevState) => ({
-        ...prevState,
-        [e.target.id]:
-          e.target.id === "category"
-            ? e.target.value
-            : boolean ?? e.target.value,
-      }));
-    }
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault(); //prevent the refreshing
-    setLoading(true);
-    if (+discountPrice >= +price) {
-      setLoading(false);
-      toast.error("Discounted price needs to be less than regular price");
-      return;
-    }
+  
+    
 
-    const storeImage = async (image) => {
-      return new Promise((resolve, reject) => {
-        const storage = getStorage();
-        const filename = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
-        const storageRef = ref(storage, filename);
-        const uploadTask = uploadBytesResumable(storageRef, image);
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-            switch (snapshot.state) {
-              case "paused":
-                console.log("Upload is paused");
-                break;
-              case "running":
-                console.log("Upload is running");
-                break;
-            }
-          },
-          (error) => {
-            // Handle unsuccessful uploads
-            reject(error);
-          },
-          () => {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              resolve(downloadURL);
-            });
-          }
-        );
-      });
-    };
-    const imgUrl = await Promise.all(
-      [...image].map((image) => storeImage(image))
-    ).catch((error) => {
-      setLoading(false);
-      toast.error("Images not uploaded");
-      return;
-    });
-    // console.log(imgUrl)
 
-    const formDataCopy = {
-      ...formData,
-      imgUrl,
-      timestamp: serverTimestamp(),
-      userRef: auth.currentUser.uid,
-    };
 
-    // console.log(formDataCopy);
-    //complete the database operation
-    delete formDataCopy.image;
-    !formDataCopy.offer && delete formDataCopy.discountPrice;
-    const docRef = await addDoc(collection(db, "products"), formDataCopy);
-    setLoading(false);
-    toast.success("Listing created");
-  };
+ useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+if(loading){
+    return <Spinner/>
+}
 
-  //  useEffect(() => {
-  //     console.log(formData);
-  //   }, [formData]);
-  if (loading) {
-    return <Spinner />;
-  }
+
+
 
   return (
     <main className="max-w-xl px-2 mx-auto">
@@ -147,7 +169,7 @@ export default function CreateListing() {
           required
           id="title"
           value={title}
-          onChange={handleChange}
+            onChange={handleChange}
           placeholder="Enter the title of the listing"
           className="w-full border p-2 mt-1 rounded-lg"
         />
@@ -209,6 +231,7 @@ export default function CreateListing() {
             <input
               type="number"
               id="discountPrice"
+
               value={discountPrice}
               onChange={handleChange}
               placeholder="Discounted Price"
@@ -241,6 +264,7 @@ export default function CreateListing() {
           type="file"
           id="image"
           accept="image/*"
+      
           onChange={handleChange}
           className="w-full border p-2 mt-1 rounded-lg mb-6"
           required
