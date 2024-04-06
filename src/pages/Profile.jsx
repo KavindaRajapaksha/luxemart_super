@@ -10,7 +10,7 @@ import { RiShoppingBag3Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import {useEffect} from "react";
 import { collection, where } from "firebase/firestore";
-import { getDocs } from "firebase/firestore";
+import { getDocs,deleteDoc } from "firebase/firestore";
 import ListingItems from "../components/ListingItems";
 
 export default function Profile() {
@@ -73,6 +73,20 @@ export default function Profile() {
     fetchUserProducts();
   }, [auth.currentUser.uid]);
 
+  const onDelete = async (id) => {
+    if(window.confirm("Are you sure you want to delete this item?")){
+      //delete the item
+      await deleteDoc(doc(db, "products", id));
+      //update the state
+      const updatedProducts = products.filter((product) => product.id !== id);
+      setProducts(updatedProducts);
+      toast.success("Item deleted successfully");
+    }
+  };
+
+  const onEdit = async (id) => {
+    navigate(`/edit-list/${id}`)
+  };
 
 
 
@@ -137,9 +151,13 @@ export default function Profile() {
         {!loading && products.length>0 && (
           <>
             <h2 className="text-xl text-center  mb-6 text-blue-900 mt-8 ">{userName}'S Listings </h2>
+            
             <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
               {products.map((product) => (  
-               <ListingItems key={product.id} products={product.data} id={product.id} />
+               <ListingItems key={product.id} products={product.data} id={product.id}
+                 onDelete={()=>onDelete(product.id)}
+                 onEdit={()=>onEdit(product.id)}
+                />
               ))}
             </ul>
           </>

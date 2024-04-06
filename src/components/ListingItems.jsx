@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
+import { MdEdit } from "react-icons/md";
+import { FaTrash } from "react-icons/fa6";
 
 
-export default function ListingItems({ products, id }) {
+export default function ListingItems({ products, id,onEdit,onDelete }) {
   // Check if product or name is undefined/null before rendering
 //   if (!product || !product.title) {
 //     return null; // Or any other handling logic you prefer
@@ -21,7 +23,7 @@ export default function ListingItems({ products, id }) {
         <div className="w-full p-[10px]">
          <p className='font-semibold m-0 text-xl truncate'>{products.title}</p>
          <p className='text-[#3848b3] mt-2 text-sm'>Price:Rs. {products.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.00</p>
-         <p className='text-[#de4545] mt-2 text-md'>The discounted price is:Rs. {products.discountPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.00</p>
+         <p className='text-[#4860ff] mt-2 text-md'>The discounted price is:Rs. {products.discountPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.00</p>
             <p>Category: <span className='text-[#38b33a] mt-2 text-sm'>{products.category}</span></p>
         </div>
         
@@ -29,6 +31,18 @@ export default function ListingItems({ products, id }) {
       
 
     </Link>
+    {onDelete && (
+        <FaTrash
+          className="absolute bottom-2 right-2 h-[14px] cursor-pointer text-red-700"
+          onClick={() => onDelete(products.id)}
+        />
+      )}
+      {onEdit && (
+        <MdEdit
+          className="absolute bottom-2 right-7 h-4 cursor-pointer "
+          onClick={() => onEdit(products.id)}
+        />
+      )}
    </li>
   );
 }
