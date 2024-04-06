@@ -5,14 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { updateProfile } from "firebase/auth";
 import { db } from "../firbase";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, orderBy, query, updateDoc } from "firebase/firestore";
 import { RiShoppingBag3Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import {useEffect} from "react";
+import { collection, where } from "firebase/firestore";
+import { getDocs } from "firebase/firestore";
+import ListingItems from "../components/ListingItems";
 
 export default function Profile() {
   const auth = getAuth();
   const navigate = useNavigate();
   const [changeDetail, setChangeDetail] = useState(false);
+  const [products, setProducts] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     userName: auth.currentUser.displayName,
     email: auth.currentUser.email,
@@ -44,6 +50,32 @@ export default function Profile() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value});
   };
+  useEffect(() => {
+    async function fetchUserProducts() {
+      const productRef = collection(db, "products");
+      const q = query(
+        productRef,
+        where("userRef", "==", auth.currentUser.uid),
+        orderBy("timestamp", "desc")
+      );
+      
+      const querySnap = await getDocs(q);
+      let products = [];
+      querySnap.forEach((doc) => {
+        return products.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+      setProducts(products);
+      setLoading(false);
+    }
+    fetchUserProducts();
+  }, [auth.currentUser.uid]);
+
+
+
+
 
   return (
     <>
@@ -101,6 +133,18 @@ export default function Profile() {
           </button>
         </div>
       </section>
+      <div className="max-w-6xl px-3 mt-6 mx-auto">
+        {!loading && products.length>0 && (
+          <>
+            <h2 className="text-xl text-center  mb-6 text-blue-900 mt-8 ">{userName}'S Listings </h2>
+            <ul>
+              {products.map((product) => (  
+               <ListingItems key={product.id} products={product.data} id={product.id} />
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
     </>
   );
 }
