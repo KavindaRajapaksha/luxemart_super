@@ -137,7 +137,7 @@ export default function Profile() {
         {!loading && products.length>0 && (
           <>
             <h2 className="text-xl text-center  mb-6 text-blue-900 mt-8 ">{userName}'S Listings </h2>
-            <ul>
+            <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
               {products.map((product) => (  
                <ListingItems key={product.id} products={product.data} id={product.id} />
               ))}
