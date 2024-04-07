@@ -48,7 +48,7 @@ export default function Header() {
                 pathMatchRoute("/offers") && "text-green-600 border-b-green-900"
               }`}
               onClick={() => navigate("/offers")}>
-                    Offers
+                    Categories
                 </li>
                 <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
                 (pathMatchRoute("/sign-in") || pathMatchRoute("/profile")) &&

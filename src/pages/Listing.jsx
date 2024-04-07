@@ -7,7 +7,7 @@ import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
+
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -71,7 +71,7 @@ export default function Listing() {
         </SwiperSlide>
       </Swiper>
       
-      <div className="bg-white mt-20 mb-20 px-6 py-12 max-w-6xl mx-auto shadow-xl hover:shadow-2xl rounded-md">
+      <div className="bg-white md:flex-row  mt-20 mb-20 px-6 py-12 max-w-6xl lg:mx-auto  shadow-xl hover:shadow-2xl rounded-md">
   <div className="text-center mb-3">
     <h1 className="text-3xl text-green-800 font-semibold">{product.title}</h1>
   </div>
@@ -96,7 +96,7 @@ export default function Listing() {
       />
     </div>
   </div>
-  <p className="text-sm font-bold text-end mt-5 ">listed by: {auth.currentUser.displayName}</p>
+  {/* <p className="text-sm font-bold text-end mt-5 ">listed by: {auth.currentUser.displayName}</p> */}
 </div>
 
      
