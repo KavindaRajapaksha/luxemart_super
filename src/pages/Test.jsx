@@ -1,100 +1,120 @@
-import React from 'react'
-import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
-import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from "swiper/react";
-import { useParams } from "react-router-dom";
-import{useState,useEffect} from "react";
-import { collection, doc, getDocs, query,orderBy } from "firebase/firestore";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import "swiper/css/autoplay";
-import "swiper/css/effect-fade";
-import { db } from '../firbase';
+import { Link } from "react-router-dom";
+import {
+  BsFacebook,
+  BsInstagram,
+  BsTwitter,
+  BsGithub,
+  BsDribbble,
+} from "react-icons/bs";
 
-
-export default function Home() {
-  const params = useParams();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        //get refference to the document
-        const productsRef=collection(db,"products");
-        //create a query against the collection
-        const q=query(productsRef,orderBy("timestamp","desc"));
-        //execute the query
-        const querySnapshot = await getDocs(q);
-        const productsList=[];
-        querySnapshot.forEach((doc) => {
-         return productsList.push(
-          {
-            id:doc.id,
-            data:doc.data()
-          }
-         )
-        });
-        setProduct(productsList);
-        console.log(productsList);
-
-      } catch (error) {
-        console.error("Error fetching document: ", error);
-      }
-    };
-    fetchProduct();
-  },[]);
-
-
-
+export default function FooterComponent() {
   return (
-  <main>
-     <Swiper
-        modules={[Navigation, Pagination, Autoplay, EffectFade]}
-        effect="fade"
-        slidesPerView={1}
-        navigation
-        autoplay={{ delay: 2500 }}
-        pagination={{ type: "progressbar" }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
-      >
-        <SwiperSlide>
-          <img src="../assets/image1.jpg" alt="slide1" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="../assets/image2.jpg" alt="slide2" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="../assets/image3.jpg" alt="slide3" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="../assets/image4.jpg" alt="slide4" />
-        </SwiperSlide>
-      </Swiper>
-      <div className='mt-20'>
-      <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto ">
-        <h1 className="text-3xl text-green-800 font-bold lg:text-6xl">
-          Welcome to <span className='text-teal-500'>Luxemart</span> Family!!
-        </h1>
-        <p className="text-gray-500 text-xs sm:text-sm">
-          
-"Embark on a journey of discovery with Luxemart Supermarket's Admin Panel, where efficiency meets convenience. Navigate through a seamless interface designed for supermarket staff, enabling effortless product management. Whether you're restocking shelves, updating prices, or fine-tuning inventory, our platform provides the tools you need to streamline operations and elevate your supermarket experience. Join us in revolutionizing the way you manage inventory, one click at a time."
-        </p>
-        <Link
-          to="/profile"
-          className="text-xs sm:text-sm text-gray-700 font-bold hover:underline"
-        >
-          For handle products
-        </Link>
+    <footer className="border border-t-8 border-teal-500 py-8 bg-gray-100">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="text-center md:text-left">
+            <Link
+              to="/"
+              className="text-sm sm:text-xl font-semibold dark:text-white"
+            >
+              <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
+                KOLOGIC
+              </span>{" "}
+              Blog
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-4 md:gap-8">
+            <div>
+              <h3 className="font-semibold">About</h3>
+              <ul>
+                <li>
+                  <a
+                    href="/post/kologic-technology"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Our Company
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/about"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                   Luxemart Super
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold">Follow us</h3>
+              <ul>
+                <li>
+                  <a
+                    href="https://github.com/KavindaRajapaksha"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Github
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61553784651577"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Facebook
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold">Legal</h3>
+              <ul>
+                <li>
+                  <a href="/privacy-policy">Privacy Policy</a>
+                </li>
+                <li>
+                  <a href="/terms-and-conditions">Terms & Conditions</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <hr className="my-8 border-gray-300" />
+        <div className="flex justify-center items-center">
+          <span className="text-gray-600 text-sm">
+            &copy; {new Date().getFullYear()} KOLOGIC Blog
+          </span>
+          <div className="flex gap-6 ml-8">
+            <a
+              href="https://www.facebook.com/profile.php?id=61553784651577"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <BsFacebook />
+            </a>
+            <a href="#">
+              <BsInstagram />
+            </a>
+            <a href="#">
+              <BsTwitter />
+            </a>
+            <a
+              href="https://github.com/KavindaRajapaksha"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <BsGithub />
+            </a>
+            <a href="#">
+              <BsDribbble />
+            </a>
+          </div>
+        </div>
       </div>
-      <div className='mt-10'>
-      <h2 className="text-3xl text-green-600  lg:text-4xl text-center">All Products</h2>
-
-      </div>
-      </div>
-  </main>
-  )
+    </footer>
+  );
 }

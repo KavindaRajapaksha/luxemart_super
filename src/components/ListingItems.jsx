@@ -10,6 +10,9 @@ export default function ListingItems({ products, id,onEdit,onDelete }) {
 //   if (!product || !product.title) {
 //     return null; // Or any other handling logic you prefer
 //   }
+// if (!products || !products.data || !products.data.category) {
+//   return null; // Or any other handling logic you prefer
+// }
 
   return (
    <li className="relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-[10px]">
