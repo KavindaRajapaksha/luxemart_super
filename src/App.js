@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CreateListing from './pages/CreateListing';
 import EditListing from './pages/EditListing';
 import Listing from './pages/Listing';
-// import Footer from './components/Footer';
+import Footer from './components/Footer';
 
 
 
@@ -46,8 +46,8 @@ function App() {
       
     
     </Routes>
-{/* 
-  <Footer/> */}
+
+  <Footer/>
   </Router>
   
   <ToastContainer
