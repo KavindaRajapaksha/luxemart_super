@@ -37,28 +37,32 @@ export default function Header() {
           />
         </div>
         <div>
-            <ul className="flex space-x-10">
-                <li  className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                pathMatchRoute("/") && "text-green-600 border-b-green-700"
-              }`}
-              onClick={() => navigate("/")} >
-                    Home
-                </li>
-                <li  className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                pathMatchRoute("/offers") && "text-green-600 border-b-green-700"
-              }`}
-              onClick={() => navigate("/offers")}>
-                    Categories
-                </li>
-                <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                (pathMatchRoute("/sign-in") || pathMatchRoute("/profile")) &&
-                "text-green-600 border-b-green-700"
-              }`}
-              onClick={() => navigate("/profile")}>
-                   {pageState}
-                </li>
-                
-            </ul>
+        <ul className="flex space-x-10">
+                        <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+                            pathMatchRoute("/") && "text-green-600 border-b-green-700"
+                            }`}
+                            onClick={() => navigate("/")}>
+                            Home
+                        </li>
+                        <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+                            pathMatchRoute("/offers") && "text-green-600 border-b-green-700"
+                            }`}
+                            onClick={() => navigate("/offers")}>
+                            Categories
+                        </li>
+                        <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+                            pathMatchRoute("/about") && "text-green-600 border-b-green-700"
+                            }`}
+                            onClick={() => navigate("/about")} >
+                            About
+                        </li>
+                        <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
+                            (pathMatchRoute("/profile") || pathMatchRoute("/sign-in")) && "text-green-600 border-b-green-700"
+                            }`}
+                            onClick={() => navigate("/profile")}>
+                            {pageState}
+                        </li>
+                    </ul>
         </div>
       </header>
     </div>
