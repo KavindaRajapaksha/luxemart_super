@@ -49,7 +49,7 @@ const About = () => {
               </h1>
               <p className='text-lg leading-relaxed mb-8 text-center md:text-left'>
               At our "We Deliver, You Enjoy Your Order" service, convenience and satisfaction are at the heart of everything we do. Whether you're craving a gourmet meal for a special occasion or simply stocking up on everyday essentials, we've got you covered. With our seamless online ordering platform and reliable delivery service, you can enjoy the convenience of having your favorite products delivered right to your doorstep. From farm-fresh produce to artisanal delicacies, each item is carefully selected and packed with care, ensuring that you receive only the highest quality products. 
-              Sit back, relax, and let us take care of the rest. With "We Deliver, You Enjoy Your Order," indulgence is just a click away.</p>
+              Sit back, relax, and let us take care of the rest. With "We Deliver, You Enjoy Your Order," indulgence is just a click away...</p>
             </div>
             <div className='w-full md:w-1/2'>
               <img src='/images/asian-delivery-man-wearing-red-uniform-holding-fresh-food-basket-isolated-white-wall.jpg' alt="My Image" className='mx-auto md:ml-auto mb-8' />
