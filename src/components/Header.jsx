@@ -3,6 +3,7 @@ import {useLocation,useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 import { getAuth,onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 
 export default function Header() {
@@ -29,12 +30,15 @@ export default function Header() {
     <div className="bg-white border-b shadow-sm sticky top-0 z-40">
       <header className="flex justify-between items-center px-3 max-w-6xl mx-auto">
         <div>
-          <img
-            src="https://www.hsbc.lk/content/dam/hsbc/lk/images/credit-cards/offers/16-9/keels-logo-pwsimg-1400.jpg"
-            alt="logo"
-            className="h-5 cursor-pointer"
-            onClick={() => navigate('/')}
-          />
+        <Link
+              to="/"
+              className="text-sm sm:text-xl font-semibold text-green-900"
+            >
+              <span className="px-2 py-1 bg-gradient-to-r from-green-900 via-green-700 to-green-400 rounded-lg text-white">
+                LUXEMART
+              </span>{" "}
+              Super
+            </Link>
         </div>
         <div>
         <ul className="flex space-x-10">
