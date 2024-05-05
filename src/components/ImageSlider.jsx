@@ -35,22 +35,8 @@ const slideImages = [
 
 
 export default function ImageSlider() {
-
-  
-  
-    
-
-
-
-
-
-
-
-
-
-
-    return (
-        <div className="slide-container">
+return (
+        <div className="slide-container" style={{marginTop:'10px'}}>
           <Slide>
            {slideImages.map((slideImage, index)=> (
               <div key={index}>
