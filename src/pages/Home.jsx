@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
+//import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
+//import { Swiper, SwiperSlide } from 'swiper/react';
 import { collection, query, getDocs, orderBy, limit, startAfter } from 'firebase/firestore';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -13,6 +13,7 @@ import { db } from '../firbase';
 import {toast} from "react-toastify";
 import Spinner from '../components/Spinner';
 import ListingItems from '../components/ListingItems';
+import ImageSwipper from '../components/ImageSwipper';
 
 
 
@@ -92,30 +93,9 @@ export default function Home() {
 
   return (
     <main>
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay, EffectFade]}
-        effect="fade"
-        slidesPerView={1}
-        navigation
-        autoplay={{ delay: 2500 }}
-        pagination={{ type: "progressbar" }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
-      >
-        <SwiperSlide>
-          <img src="../assets/image1.jpg" alt="slide1" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="../assets/image2.jpg" alt="slide2" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="../assets/image3.jpg" alt="slide3" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="../assets/image4.jpg" alt="slide4" />
-        </SwiperSlide>
-      </Swiper>
-      <div className="mt-20">
+      <section style={{marginBottom:'10px'}}><p><ImageSwipper/></p></section>
+
+      <div className="mt-5">
         <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto">
           <h1 className="text-3xl text-green-800 font-bold lg:text-6xl">
             Welcome to <span className="text-teal-500">Luxemart</span> Family!!

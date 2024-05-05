@@ -3,9 +3,7 @@ import { useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firbase";
 import Spinner from "../components/Spinner";
-import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
-
-import { Swiper, SwiperSlide } from "swiper/react";
+import ImageSwipper2 from "../components/ImageSwipper2";
 
 
 
@@ -47,30 +45,7 @@ export default function Listing() {
   // return <div>{product.title}</div>
   return (
     <main className="">
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay, EffectFade]}
-        effect="fade"
-        slidesPerView={1}
-        navigation
-        autoplay={{ delay: 2500 }}
-        pagination={{ type: "progressbar" }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
-      >
-        <SwiperSlide>
-          <img src="../assets/image1.jpg" alt="slide1" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="../assets/image2.jpg" alt="slide2" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="../assets/image3.jpg" alt="slide3" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="../assets/image4.jpg" alt="slide4" />
-        </SwiperSlide>
-      </Swiper>
-      
+      <ImageSwipper2/>
       <div className="bg-white md:flex-row  mt-20 mb-20 px-6 py-12 max-w-6xl lg:mx-auto  shadow-xl hover:shadow-2xl rounded-md">
   <div className="text-center mb-3">
     <h1 className="text-3xl text-green-800 font-semibold">{product.title}</h1>
