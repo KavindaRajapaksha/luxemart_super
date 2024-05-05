@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firbase";
 import Spinner from "../components/Spinner";
-import ImageSwipper2 from "../components/ImageSwipper2";
+// import ImageSwipper2 from "../components/ImageSwipper2";
 
 
 
@@ -13,11 +13,11 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import "swiper/css/effect-fade";
-import { getAuth } from "firebase/auth";
+// import { getAuth } from "firebase/auth";
 
 export default function Listing() {
   const params = useParams();
-  const auth = getAuth();
+  // const auth = getAuth();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -45,7 +45,7 @@ export default function Listing() {
   // return <div>{product.title}</div>
   return (
     <main className="">
-      <ImageSwipper2/>
+      {/* <ImageSwipper2/> */}
       <div className="bg-white md:flex-row  mt-20 mb-20 px-6 py-12 max-w-6xl lg:mx-auto  shadow-xl hover:shadow-2xl rounded-md">
   <div className="text-center mb-3">
     <h1 className="text-3xl text-green-800 font-semibold">{product.title}</h1>
