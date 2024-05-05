@@ -34,7 +34,7 @@ export default function Header() {
               to="/"
               className="text-sm sm:text-xl font-semibold text-green-900"
             >
-              <span className="px-2 py-1 bg-gradient-to-r from-green-900 via-green-700 to-green-400 rounded-lg text-white">
+              <span className="px-1.5 py-0.4 bg-gradient-to-r from-green-900 via-green-700 to-green-400 rounded-lg text-white">
                 LUXEMART
               </span>{" "}
               Super
