@@ -30,15 +30,15 @@ export default function Header() {
     <div className="bg-white border-b shadow-sm sticky top-0 z-40">
       <header className="flex justify-between items-center px-3 max-w-6xl mx-auto">
         <div>
-        <Link
-              to="/"
-              className="text-sm sm:text-xl font-semibold text-green-900"
-            >
-              <span className="px-2 py-1 bg-gradient-to-r from-green-900 via-green-700 to-green-400 rounded-lg text-white">
-                LUXEMART
-              </span>{" "}
-              Super
-            </Link>
+        <div className="text-center sm:text-left">
+    <Link to="/" className="text-sm sm:text-xl font-semibold text-green-900">
+        <span className="px-2 py-1 bg-gradient-to-r from-green-900 via-green-700 to-green-400 rounded-lg text-white">
+            LUXEMART
+        </span>{" "}
+        <span className="hidden sm:inline">Super</span>
+    </Link>
+</div>
+
         </div>
         <div>
         <ul className="flex space-x-10">
