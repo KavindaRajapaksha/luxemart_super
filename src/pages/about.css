@@ -1,0 +1,13 @@
+
+  
+  .image-responsive {
+    opacity: 1;
+    transform: scale(0.4);
+    transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+  }
+ 
+  .image-responsive.animate {
+    opacity: 2;
+    transform: scale(1);
+  }
+ 

@@ -14,26 +14,26 @@ export default function ListingItems({ products, id,onEdit,onDelete }) {
 //   return null; // Or any other handling logic you prefer
 // }
 
-  return (
-   <li className="relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-[10px]">
-    <Link to={`/category/${products.category}/${id}`}>
-        <div>
-        <img className="h-[170px] w-full object-cover hover:scale-105 transition-scale duration-200 ease-in"
-          loading="lazy" src={products.imgUrl[0]} alt={products.title} />
-        <Moment  className="absolute top-2 left-2 bg-[#185d1d] text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg" fromNow>
-        {products.timestamp?.toDate()}
-        </Moment>
-        <div className="w-full p-[10px]">
-         <p className='font-semibold m-0 text-xl truncate'>{products.title}</p>
-         <p className='text-[#3848b3] mt-2 text-sm'>Price:Rs. {products.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.00</p>
-         <p className='text-[#4860ff] mt-2 text-md'>The discounted price is:Rs. {products.discountPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.00</p>
-            <p>Category: <span className='text-[#38b33a] mt-2 text-sm'>{products.category}</span></p>
-        </div>
-        
-        </div>
-      
+return (
+  <li className=" custom-frame relative bg-white flex flex-col justify-between items-center shadow-md border border-black-200 hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-[10px]">
+   <Link to={`/category/${products.category}/${id}`}>
+       <div>
+       <img className="h-[170px] w-full object-cover hover:scale-105 transition-scale duration-200 ease-in"
+         loading="lazy" src={products.imgUrl[0]} alt={products.title} />
+       <Moment  className="absolute top-2 left-2 bg-[#185d1d] text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg" fromNow>
+       {products.timestamp?.toDate()}
+       </Moment>
+       <div className="w-full p-[10px]">
+        <p className='font-semibold m-0 text-xl text-center truncate'>{products.title}</p>
+        <p className='text-[#2c4d3a] mt-3 text-m'>Price : Rs. {products.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.00</p>
+        <p id="discountPrice" className='text-[#e53d3d] font-bold text-md'>Discount : Rs. {products.discountPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.00</p>
+           <p>Category: <span className='text-[#277622] text-m'>{products.category}</span></p>
+       </div>
+       
+       </div>
+     
 
-    </Link>
+   </Link>
     {onDelete && (
         <FaTrash
           className="absolute bottom-2 right-2 h-[14px] cursor-pointer text-red-700"

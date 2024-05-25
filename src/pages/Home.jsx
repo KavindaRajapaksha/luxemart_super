@@ -14,7 +14,7 @@ import {toast} from "react-toastify";
 import Spinner from '../components/Spinner';
 import ListingItems from '../components/ListingItems';
 import ImageSwipper from '../components/ImageSwipper';
-
+import './Home.css';
 
 
 
@@ -86,6 +86,19 @@ export default function Home() {
       toast.error('Error fetching more products');
     }
   };
+  const renderAnimatedText = (text, startIndex) => {
+    let currentIndex = startIndex;
+    return text.split('').map((char, index) => {
+      const isSpace = char === ' ';
+      const delayClass = `slide-in-letter-${currentIndex}`;
+      currentIndex += isSpace ? 0 : 1; // Increment index only if not a space
+      return (
+        <span key={index} className={`slide-in-letter ${delayClass}`}>
+          {isSpace ? '\u00A0' : char}
+        </span>
+      );
+    });
+  };
   
   if (loading) {
     return <Spinner />;
@@ -99,7 +112,11 @@ export default function Home() {
       <div className="mt-5">
         <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto">
           <h1 className="text-3xl text-green-800 font-bold lg:text-6xl">
-            Welcome to <span className="text-teal-500">Luxemart</span> Family!!
+          {renderAnimatedText("Welcome to ", 1)}
+            <span className=" text-green-600">
+              {renderAnimatedText("Luxemart", 10)}
+            </span>
+            {renderAnimatedText(" Family!!", 16)}
           </h1>
           <p className="text-gray-500 text-xs sm:text-sm">
             "Embark on a journey of discovery with Luxemart Supermarket's Admin Panel, where efficiency meets convenience. Navigate through a seamless interface designed for supermarket staff, enabling effortless product management. Whether you're restocking shelves, updating prices, or fine-tuning inventory, our platform provides the tools you need to streamline operations and elevate your supermarket experience. Join us in revolutionizing the way you manage inventory, one click at a time."
@@ -109,7 +126,7 @@ export default function Home() {
           </Link>
         </div>
         <></>
-        <div className="max-w-6xl px-3 mt-6 mx-auto">
+        <div className="max-w-6xl px-3 mt--1 mx-auto mb-8">
         {!loading && products.length>0 && (
           <>
           <h2 className="text-3xl mb-20 text-green-600 lg:text-4xl text-center">All Products</h2>

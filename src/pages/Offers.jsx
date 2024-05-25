@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { db } from '../firbase';
 import Spinner from '../components/Spinner';
 import ListingItem from '../components/ListingItems'
+import './Offers.css';
 
 export default function Offers() {
   const [vegProducts, setVegProducts] = useState(null);
@@ -250,16 +251,28 @@ export default function Offers() {
 
 
 
-  return(
-    <main>
+  return (
+    <main >
       <div>
-        <h1 className="text-2xl font-semibold text-center text-green-900 mt-15 my-8">Products under the Categories</h1>
+      <h1 className="text-2xl font-semibold text-center text-green-900 mt-2 my-5">
+  <div className="relative w-full h-64">
+    <img
+      src="https://t3.ftcdn.net/jpg/06/64/18/04/240_F_664180414_GJyNYnKTQL8BYPXpkWLVgV2CSbhOwpZe.jpg"
+      alt="Category Banner"
+      className="w-full h-full object-cover"
+    />
+    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <span className="text-white mb-2 text-5xl font-bold animate-pulse">Product Categories</span>
+    </div>
+  </div>
+</h1>
+
       </div>
-      <div className="max-w-6xl px-3 mt-6 mx-auto">
-      {vegProducts && vegProducts.length > 0 && (
+      <div className="max-w-6xl px-3 mt-10 mx-auto">
+        {vegProducts && vegProducts.length > 0 && (
           <div className="m-2 mb-6">
-            <h2 className="px-3 text-xl mt-6 text-center text-green-700 mb-10" >vegitables</h2>
-         
+            <h2 className=" custom-linkk px-3 text-xl mt-6 text-center mb-10" >vegitables</h2>
+
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
               {vegProducts.map((product) => (
                 <ListingItem
@@ -273,7 +286,7 @@ export default function Offers() {
         )}
         {meatProducts && meatProducts.length > 0 && (
           <div className="m-2 mb-6">
-            <h2 className="px-3 text-xl mt-6 text-center text-green-700 mb-10" >Meats</h2>
+            <h2 className="custom-linkk px-3 text-xl mt-6 text-center text-green-700 mb-10" >Meats</h2>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
               {meatProducts.map((product) => (
                 <ListingItem
@@ -287,7 +300,7 @@ export default function Offers() {
         )}
         {beveragesProducts && beveragesProducts.length > 0 && (
           <div className="m-2 mb-6">
-            <h2 className="px-3 text-xl mt-6 text-center text-green-700 mb-10" >Beverages</h2>
+            <h2 className="custom-linkk px-3 text-xl mt-6 text-center text-green-700 mb-10" >Beverages</h2>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
               {beveragesProducts.map((product) => (
                 <ListingItem
@@ -301,7 +314,7 @@ export default function Offers() {
         )}
         {desertsProducts && desertsProducts.length > 0 && (
           <div className="m-2 mb-6">
-            <h2 className="px-3 text-xl mt-6 text-center text-green-700 mb-10" >Deserts</h2>
+            <h2 className="custom-linkk px-3 text-xl mt-6 text-center text-green-700 mb-10" >Deserts</h2>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
               {desertsProducts.map((product) => (
                 <ListingItem
@@ -315,7 +328,7 @@ export default function Offers() {
         )}
         {snacksProducts && snacksProducts.length > 0 && (
           <div className="m-2 mb-6">
-            <h2 className="px-3 text-xl mt-6 text-center text-green-700 mb-10" >Snacks</h2>
+            <h2 className="custom-linkk px-3 text-xl mt-6 text-center text-green-700 mb-10" >Snacks</h2>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
               {snacksProducts.map((product) => (
                 <ListingItem
@@ -329,7 +342,7 @@ export default function Offers() {
         )}
         {educationalProducts && educationalProducts.length > 0 && (
           <div className="m-2 mb-6">
-            <h2 className="px-3 text-xl mt-6 text-center text-green-700 mb-10" >Educational</h2>
+            <h2 className="custom-linkk px-3 text-xl mt-6 text-center text-green-700 mb-10" >Educational</h2>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
               {educationalProducts.map((product) => (
                 <ListingItem
@@ -343,7 +356,7 @@ export default function Offers() {
         )}
         {beautyProducts && beautyProducts.length > 0 && (
           <div className="m-2 mb-6">
-            <h2 className="px-3 text-xl mt-6 text-center text-green-700 mb-10" >Beauty</h2>
+            <h2 className="custom-linkk px-3 text-xl mt-6 text-center text-green-700 mb-10" >Beauty</h2>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
               {beautyProducts.map((product) => (
                 <ListingItem
@@ -355,9 +368,9 @@ export default function Offers() {
             </ul>
           </div>
         )}
-        
 
-      
+
+
       </div>
     </main>
   )
